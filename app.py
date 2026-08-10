@@ -37,9 +37,13 @@ st.title("📄 Simple AI PDF Summarizer")
 st.sidebar.header("Setup")
 user_api_key = st.sidebar.text_input("Paste Gemini API Key Here:", type="password")
 
-if not user_api_key and "GEMINI_API_KEY" in st.secrets:
-    user_api_key = st.secrets["GEMINI_API_KEY"]
-
+# Safely check Streamlit Cloud Secrets without crashing localhost
+if not user_api_key:
+    try:
+        if "GEMINI_API_KEY" in st.secrets:
+            user_api_key = st.secrets["GEMINI_API_KEY"]
+    except Exception:
+        pass
 # File Upload Section
 uploaded_file = st.file_uploader("Upload your PDF document", type=["pdf"])
 
