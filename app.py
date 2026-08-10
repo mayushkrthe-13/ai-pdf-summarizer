@@ -35,7 +35,10 @@ st.title("📄 Simple AI PDF Summarizer")
 
 # Sidebar for Key Input
 st.sidebar.header("Setup")
-user_api_key = st.sidebar.text_input("Paste Gemini API Key Here:", value="AQ.Ab8RN6IzpdBH5MWV1TVEzRk_OVveNtzzWlNeF14GY2k3XZAyIA", type="password")
+user_api_key = st.sidebar.text_input("Paste Gemini API Key Here:", type="password")
+
+if not user_api_key and "GEMINI_API_KEY" in st.secrets:
+    user_api_key = st.secrets["GEMINI_API_KEY"]
 
 # File Upload Section
 uploaded_file = st.file_uploader("Upload your PDF document", type=["pdf"])
